@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class UserVC: UITableViewController {
+class UserVC: UIViewController{
 
     // MARK : @IBOutlet
   
@@ -20,22 +20,34 @@ class UserVC: UITableViewController {
     // MARK: PROPERTY
   
     let userData : [String] =  ["UserName","Name","Phone","D.O.B","Email","Gender","Password","Address"]
-		
-    var data : [User] = []
+		var data : [User] = []
+    var username : String?
+    var name : String?
+    var phon : String?
+    var dob  : String?
+    var email : String?
+    var gender : String?
+    var password : String?
+    var address : String?
+  var selectedUser :User!
 
     // MARK : TABLE VIEW LIFE CYCLE
   
     override func viewDidLoad() {
         super.viewDidLoad()
       
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-  
+//      self.automaticallyAdjustsScrollViewInsets = false
+      
+      tableViewOutlet.dataSource = self
+      tableViewOutlet.delegate = self
+      
+      
+      let listNib = UINib(nibName: "TableViewCell", bundle: nil)
+      tableViewOutlet.register(listNib, forCellReuseIdentifier: "TableViewCellID")
+       tableViewOutlet.reloadData()
+      
+      }
+      
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
@@ -43,85 +55,116 @@ class UserVC: UITableViewController {
             return
         }
     
-      let managedContext = appDelegate.persistentContainer.viewContext
-    
-      let fetchRequest : NSFetchRequest<User> = User.fetchRequest()
-    
-      do {
+        let managedContext = appDelegate.persistentContainer.viewContext
       
-          data = try managedContext.fetch(fetchRequest)
+        let fetchRequest : NSFetchRequest<User> = User.fetchRequest()
+    
+        do {
       
-        } catch let error as NSError {
+            data = try managedContext.fetch(fetchRequest)
+      
+          } catch let error as NSError {
       
           print("Could not fetch. \(error), \(error.userInfo)")
+            
+        tableViewOutlet.reloadData()
           
       }
   }
+// MARK: @IBAction
   
-  
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return userData.count
-    }
-
-  
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCellID" , for: indexPath)  as! TableViewCell
-        cell.labelName.text = userData[indexPath.row]
-        return cell
-    }
-  
-  // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    //override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    //}
-   // */
-  
-  // MARK: @IBAction
-    
-    @IBAction func doneBTAction(_ sender: Any) {
+    @IBAction func doneBTAction(_ sender: UIBarButtonItem) {
+      
+      tableViewOutlet.endEditing(true)
       
       guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
         return
       }
       
       let managedContext = appDelegate.persistentContainer.viewContext
-      let entity = NSEntityDescription.entity(forEntityName: "user",
+      let entity = NSEntityDescription.entity(forEntityName: "User",
                                               in: managedContext)!
       
       let userdata = User(entity: entity,
                           insertInto: managedContext)
-      
-      // userdata.name = name //setValue(name, forKeyPath: "name")
+      userdata.userName = username
+      userdata.name = name
+      userdata.phone = phon
+      userdata.dob = dob
+      userdata.email = email
+      userdata.gender = gender
+      userdata.password = password
+      userdata.address = address
       
       do {
-            try managedContext.save()
-            data.append(userdata)
+        try managedContext.save()
+        data.append(userdata)
         
-          } catch let error as NSError {
+      } catch let error as NSError {
         
-            print("Could not save. \(error), \(error.userInfo)")
+        print("Could not save. \(error), \(error.userInfo)")
       }
+      tableViewOutlet.reloadData()
+     
+      _ = self.navigationController?.popViewController(animated: true)
+      
+      
+         }
+  
+}
 
+
+extension UserVC: UITableViewDataSource , UITableViewDelegate  {
+  
+
+  
+   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    
+    let cell =  tableView.dequeueReusableCell(withIdentifier: "TableViewCellID", for: indexPath) as! TableViewCell
+        cell.labelName.text = userData[indexPath.row]
+    cell.textFieldInfo.delegate = self
+    
+    return cell
+  }
+  
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return userData.count
+  }
+}
+
+
+extension UserVC: UITextFieldDelegate{
+  
+  func textFieldDidEndEditing(_ textField: UITextField) {
+    
+    guard  let tableViewCell = textField.getTableViewCell as? TableViewCell else { return }
+    let tableCellIndexPath = tableViewOutlet.indexPath(for: tableViewCell)
+    
+    switch tableCellIndexPath!.item {
       
+      case 0:
+        username = textField.text
+      print(username ?? "no value")
       
-      
-      
+      case 1:
+        name = textField.text
+      case 2:
+        phon = textField.text
+      case 3:
+        dob = textField.text
+      case 4:
+        email = textField.text
+      case 5:
+        gender = textField.text
+      case 6:
+        password = textField.text
+      case 7:
+        address = textField.text
+         print(username ?? "no value")
+      default:
+        print("not found")
     }
+    tableViewOutlet.reloadData()
     
-    
-    
-
+  }
 }
