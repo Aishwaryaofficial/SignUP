@@ -79,7 +79,7 @@
             </objects>
             <point key="canvasLocation" x="1601" y="784"/>
         </scene>
-        <!--Edit Info-->
+        <!--EDIT INFO-->
         <scene sceneID="8xB-Tl-568">
             <objects>
                 <viewController restorationIdentifier="EditIDS" storyboardIdentifier="EditSID" id="8Vy-Kz-ap3" customClass="EditVC" customModule="HitList" customModuleProvider="target" sceneMemberID="viewController">
@@ -104,7 +104,7 @@
                             <constraint firstAttribute="trailing" secondItem="QtY-o1-jtb" secondAttribute="trailing" id="uNU-3D-z4m"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Info" id="txB-2f-JD0">
+                    <navigationItem key="navigationItem" title="EDIT INFO" id="txB-2f-JD0">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="DyQ-Pj-w1S">
                             <connections>
                                 <action selector="doneBTAction:" destination="8Vy-Kz-ap3" id="Asn-Hn-1LC"/>
@@ -120,7 +120,7 @@
             </objects>
             <point key="canvasLocation" x="2906" y="784"/>
         </scene>
-        <!--show info-->
+        <!--SHOW INFO-->
         <scene sceneID="nWv-Ux-Fwz">
             <objects>
                 <viewController restorationIdentifier="ShowInfoID" storyboardIdentifier="ShowInfoSID" id="RGY-hj-8vN" customClass="ShowInfoVC" customModule="HitList" customModuleProvider="target" sceneMemberID="viewController">
@@ -145,7 +145,7 @@
                             <constraint firstItem="QO3-nF-19I" firstAttribute="top" secondItem="RLn-px-VEF" secondAttribute="bottom" constant="-8" id="v7Q-m8-PwR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="show info" id="Nt5-I4-ybt"/>
+                    <navigationItem key="navigationItem" title="SHOW INFO" id="Nt5-I4-ybt"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="tableViewOutlet" destination="RLn-px-VEF" id="Pdv-KU-rv0"/>

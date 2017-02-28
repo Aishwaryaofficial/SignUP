@@ -81,7 +81,7 @@ extension MainVC: UITableViewDataSource , UITableViewDelegate{
  
   }
   
-  // when table cell get selected 
+  // when table cell get selected
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     

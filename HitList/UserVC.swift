@@ -113,10 +113,11 @@ class UserVC: UIViewController{
   
 }
 
+// MARK : extension UserVC: UITableViewDataSource , UITableViewDelegate
 
 extension UserVC: UITableViewDataSource , UITableViewDelegate  {
   
-
+  // METHOD OF UITableViewDataSource
   
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
@@ -132,8 +133,11 @@ extension UserVC: UITableViewDataSource , UITableViewDelegate  {
   }
 }
 
+// MARK : extension UserVC: UITextFieldDelegate
 
 extension UserVC: UITextFieldDelegate{
+  
+  // METHOD OF UITextFieldDelegate
   
   func textFieldDidEndEditing(_ textField: UITextField) {
     
@@ -160,7 +164,7 @@ extension UserVC: UITextFieldDelegate{
         password = textField.text
       case 7:
         address = textField.text
-         print(username ?? "no value")
+        
       default:
         print("not found")
     }

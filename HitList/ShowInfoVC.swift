@@ -10,15 +10,19 @@ import UIKit
 
 class ShowInfoVC: UIViewController {
   
+  // MARK: @IBOutlet
+  
     @IBOutlet weak var tableViewOutlet: UITableView!
   let userData : [String] =  ["UserName","Name","Phone","D.O.B","Email","Gender","Password","Address"]
   let userScene = UserVC()
   var selectUser : User!
   let mainScene = MainVC()
 
-
+  // LIFE CYCLE
+  
     override func viewDidLoad() {
         super.viewDidLoad()
+      
       tableViewOutlet.dataSource = self
       tableViewOutlet.delegate = self
       
@@ -29,11 +33,15 @@ class ShowInfoVC: UIViewController {
       tableViewOutlet.reloadData()
     // Do any additional setup after loading the view.
     }
-
-  
 }
 
+    // MARK : extension ShowInfoVC : UITableViewDataSource,UITableViewDelegate
+
 extension ShowInfoVC : UITableViewDataSource,UITableViewDelegate{
+  
+  // METHOD OF UITableViewDataSource
+  
+  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell =  tableView.dequeueReusableCell(withIdentifier: "TableViewCellID", for: indexPath) as! TableViewCell
     

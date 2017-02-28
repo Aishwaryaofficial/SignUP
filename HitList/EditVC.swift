@@ -15,25 +15,19 @@ class EditVC: UIViewController {
 
     @IBOutlet weak var tableViewOutlet: UITableView!
   
-  // property
-   let userData : [String] = ["UserName","Name","Phone","D.O.B","Email","Gender","Password","Address"]
+    // PROPERTY
+  
+    let userData : [String] = ["UserName","Name","Phone","D.O.B","Email","Gender","Password","Address"]
     var selectedUser : User!
     var data : [User] = []
-    var username : String?
-    var name : String?
-    var phon : String?
-    var dob  : String?
-    var email : String?
-    var gender : String?
-    var password : String?
-    var address : String?
+    let dbHelper = DBhelper()
+  
 
     let userScene = UserVC()
     var userno : Int!
   
+    // LIFE CYCLE
   
-  
-  // LIFE CYCLE
     override func viewDidLoad() {
         super.viewDidLoad()
       
@@ -45,11 +39,10 @@ class EditVC: UIViewController {
       tableViewOutlet.register(listNib, forCellReuseIdentifier: "TableViewCellID")
       
       tableViewOutlet.reloadData()
-
-
-        // Do any additional setup after loading the view.
+      // Do any additional setup after loading the view.
     }
   override func viewWillAppear(_ animated: Bool) {
+    
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
       return
     }
@@ -67,11 +60,10 @@ class EditVC: UIViewController {
       print("Could not fetch. \(error), \(error.userInfo)")
       
       tableViewOutlet.reloadData()
-      
-
   }
-
-  }
+}
+  
+  // MARK :  @IBAction
     
     @IBAction func doneBTAction(_ sender: UIBarButtonItem) {
       
@@ -111,16 +103,19 @@ class EditVC: UIViewController {
           
           print("Could not save \(error)")
       }
+  
       _ = self.navigationController?.popViewController(animated: true)
 
   }
   
 
 }
-  
+
+// MARK : extension EditVC: UITableViewDataSource , UITableViewDelegate
+
 extension EditVC: UITableViewDataSource , UITableViewDelegate  {
   
-  
+  // METHOD OF UITableViewDataSource
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
@@ -165,8 +160,11 @@ extension EditVC: UITableViewDataSource , UITableViewDelegate  {
   }
   }
 
+  // MARK: extension EditVC: UITextFieldDelegat
 
 extension EditVC: UITextFieldDelegate{
+  
+  // METHOD OF  UITextFieldDelegat
   
   func textFieldDidEndEditing(_ textField: UITextField) {
     
@@ -191,7 +189,7 @@ extension EditVC: UITextFieldDelegate{
        selectedUser.password = textField.text
     case 7:
        selectedUser.address = textField.text
-      print(username ?? "no value")
+      
     default:
       print("not found")
     }
